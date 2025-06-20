@@ -3,221 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher's Corner 🌟</title>
+    <title>Classroom Connect Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* General Styles */
+        /* Professional Dark Theme */
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #ffd700, #ffb6c1);
+            background: #1a1a2e; 
+            color: #ffffff;
             min-height: 100vh;
-            color: #333;
         }
 
-        /* Navigation Bar */
-        .nav-bar {
+        /* Login Modal */
+        .modal {
             display: flex;
-            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             align-items: center;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            justify-content: center;
         }
 
-        .nav-button {
-            background: #ff6b6b;
+        .auth-card {
+            background: #16213e;
+            padding: 40px;
+            border-radius: 15px;
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-btn {
+            background: #0f3460;
             border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            font-weight: bold;
-            color: white;
-        }
-
-        .nav-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
-        }
-
-        /* Content Area */
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* File List Styling */
-        .file-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .file-item {
-            background: #fff3e0;
-            margin: 10px 0;
             padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.2s;
+            width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
         }
 
-        .file-item:hover {
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #16213e;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Feedback System */
+        .feedback-card {
+            background: #222f3e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .feedback-card:hover {
             transform: translateX(10px);
         }
 
-        .file-date {
-            font-size: 0.9em;
-            color: #666;
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        /* Admin Modal */
-        #adminModal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            width: 300px;
-            text-align: center;
+        .feedback-actions {
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        /* Upload Form */
-        #uploadForm {
-            display: none;
-            margin-top: 20px;
+        .feedback-card:hover .feedback-actions {
+            opacity: 1;
         }
 
-        .upload-box {
-            border: 2px dashed #4CAF50;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: border-color 0.3s;
-        }
-
-        .upload-box:hover {
-            border-color: #45a049;
-        }
-
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .nav-bar {
-            animation: float 3s ease-in-out infinite;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .feedback-card {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <div class="nav-bar">
-        <button class="nav-button" onclick="showHome()">Home 🏠</button>
-        <button class="nav-button" onclick="showAdmin()">Admin 🔒</button>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="auth-card">
+            <h2>Welcome to Classroom Pro</h2>
+            <button class="auth-btn teacher-btn" onclick="showTeacherLogin()">Teacher 👩🏻‍🏫</button>
+            <button class="auth-btn student-btn" onclick="showStudentLogin()">Student 📖</button>
+        </div>
     </div>
 
     <!-- Main Content -->
-    <div class="content" id="homeContent">
-        <h1>Welcome to Teacher Dilshan's Classroom! 🎉</h1>
-        <ul class="file-list" id="fileList">
-            <!-- Files will appear here dynamically -->
-        </ul>
-    </div>
-
-    <!-- Admin Modal -->
-    <div id="adminModal">
-        <h2>Admin Access 🔑</h2>
-        <input type="password" id="adminPassword" placeholder="Enter password" class="nav-button">
-        <button class="nav-button" onclick="checkPassword()">Submit</button>
-    </div>
-
-    <!-- Upload Form -->
-    <div id="uploadForm" class="content">
-        <h2>Upload New File 📤</h2>
-        <div class="upload-box" onclick="document.getElementById('fileInput').click()">
-            Click here or drop files<br>
-            <small>Accepted formats: PDF, DOCX, PNG</small>
-        </div>
-        <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload()">
+    <div class="content" id="mainContent" style="display:none">
+        <h1>Class Materials & Feedback</h1>
+        
+        <!-- Feedback Section -->
+        <div id="feedbackContainer"></div>
     </div>
 
     <script>
-        // Password Protection
-        const ADMIN_PASSWORD = "Dilshan@5964";
+        const TEACHER_PASSWORD = "Dilshana@5964";
+        let currentUser = null;
 
-        function showAdmin() {
-            document.getElementById('adminModal').style.display = 'block';
-        }
-
-        function checkPassword() {
-            const enteredPassword = document.getElementById('adminPassword').value;
-            if (enteredPassword === ADMIN_PASSWORD) {
-                document.getElementById('adminModal').style.display = 'none';
-                document.getElementById('uploadForm').style.display = 'block';
-                document.getElementById('homeContent').style.display = 'none';
+        // Authentication System
+        function showTeacherLogin() {
+            const password = prompt("Enter teacher password:");
+            if (password === TEACHER_PASSWORD) {
+                currentUser = { role: 'teacher', name: 'Teacher' };
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                loadFeedback();
             } else {
-                alert('Incorrect password! Try again.');
+                alert('Incorrect password!');
             }
         }
 
-        // File Upload Handling
-        function handleFileUpload() {
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
-            
-            if (file) {
-                const fileName = file.name;
-                const uploadDate = new Date().toLocaleDateString();
-                
-                // Save to localStorage
-                const existingFiles = JSON.parse(localStorage.getItem('uploadedFiles')) || [];
-                existingFiles.push({name: fileName, date: uploadDate});
-                localStorage.setItem('uploadedFiles', JSON.stringify(existingFiles));
-                
-                // Show confirmation
-                alert('File uploaded successfully!');
-                showHome();
+        function showStudentLogin() {
+            const name = prompt("What's your name?");
+            if (name) {
+                currentUser = { role: 'student', name: name };
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                loadFeedback();
             }
         }
 
-        // Display Files
-        function showHome() {
-            document.getElementById('homeContent').style.display = 'block';
-            document.getElementById('uploadForm').style.display = 'none';
+        // Feedback System
+        function loadFeedback() {
+            const container = document.getElementById('feedbackContainer');
+            container.innerHTML = '';
             
-            const fileList = document.getElementById('fileList');
-            fileList.innerHTML = '';
+            const feedbackList = JSON.parse(localStorage.getItem('feedback')) || [];
             
-            const files = JSON.parse(localStorage.getItem('uploadedFiles')) || [];
-            
-            files.forEach(file => {
-                const listItem = document.createElement('li');
-                listItem.className = 'file-item';
-                listItem.innerHTML = `
-                    ${file.name} 
-                    <span class="file-date">Uploaded: ${file.date}</span>
+            feedbackList.forEach(feedback => {
+                const card = document.createElement('div');
+                card.className = 'feedback-card';
+                card.innerHTML = `
+                    <div class="feedback-header">
+                        <div>
+                            <strong>${feedback.name}</strong>
+                            <small class="text-gray">${feedback.date}</small>
+                        </div>
+                        ${currentUser.role === 'teacher' || currentUser.name === feedback.name ?
+                            `<div class="feedback-actions">
+                                <button onclick="deleteFeedback('${feedback.id}')">🗑️</button>
+                                <button onclick="replyFeedback('${feedback.id}')">💬</button>
+                            </div>` : ''}
+                    </div>
+                    <p>${feedback.message}</p>
+                    ${feedback.reply ? `<div class="reply"><strong>Reply:</strong> ${feedback.reply}</div>` : ''}
                 `;
-                fileList.appendChild(listItem);
+                container.appendChild(card);
             });
         }
 
+        function submitFeedback() {
+            const message = prompt("Enter your feedback:");
+            if (!message) return;
+            
+            const newFeedback = {
+                id: Date.now(),
+                name: currentUser.name,
+                message: message,
+                date: new Date().toLocaleString(),
+                reply: null
+            };
+            
+            const existing = JSON.parse(localStorage.getItem('feedback')) || [];
+            existing.push(newFeedback);
+            localStorage.setItem('feedback', JSON.stringify(existing));
+            loadFeedback();
+        }
+
+        function deleteFeedback(id) {
+            if (!confirm('Are you sure?')) return;
+            
+            let feedbackList = JSON.parse(localStorage.getItem('feedback')) || [];
+            feedbackList = feedbackList.filter(f => f.id != id);
+            localStorage.setItem('feedback', JSON.stringify(feedbackList));
+            loadFeedback();
+        }
+
+        function replyFeedback(id) {
+            if (currentUser.role !== 'teacher') return;
+            
+            const replyText = prompt("Enter your reply:");
+            if (!replyText) return;
+            
+            let feedbackList = JSON.parse(localStorage.getItem('feedback')) || [];
+            const index = feedbackList.findIndex(f => f.id == id);
+            if (index !== -1) {
+                feedbackList[index].reply = replyText;
+                localStorage.setItem('feedback', JSON.stringify(feedbackList));
+                loadFeedback();
+            }
+        }
+
         // Initialize
-        showHome();
+        document.getElementById('loginModal').style.display = 'flex';
     </script>
 </body>
 </html>
