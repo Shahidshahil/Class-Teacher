@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher's Corner 🌟</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffd700, #ffb6c1);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .nav-button {
+            background: #ff6b6b;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Content Area */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* File List Styling */
+        .file-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .file-item {
+            background: #fff3e0;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .file-item:hover {
+            transform: translateX(10px);
+        }
+
+        .file-date {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Admin Modal */
+        #adminModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        /* Upload Form */
+        #uploadForm {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .upload-box {
+            border: 2px dashed #4CAF50;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .upload-box:hover {
+            border-color: #45a049;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .nav-bar {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+        <button class="nav-button" onclick="showHome()">Home 🏠</button>
+        <button class="nav-button" onclick="showAdmin()">Admin 🔒</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content" id="homeContent">
+        <h1>Welcome to Teacher Dilshan's Classroom! 🎉</h1>
+        <ul class="file-list" id="fileList">
+            <!-- Files will appear here dynamically -->
+        </ul>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="adminModal">
+        <h2>Admin Access 🔑</h2>
+        <input type="password" id="adminPassword" placeholder="Enter password" class="nav-button">
+        <button class="nav-button" onclick="checkPassword()">Submit</button>
+    </div>
+
+    <!-- Upload Form -->
+    <div id="uploadForm" class="content">
+        <h2>Upload New File 📤</h2>
+        <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+            Click here or drop files<br>
+            <small>Accepted formats: PDF, DOCX, PNG</small>
+        </div>
+        <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload()">
+    </div>
+
+    <script>
+        // Password Protection
+        const ADMIN_PASSWORD = "Dilshan@5964";
+
+        function showAdmin() {
+            document.getElementById('adminModal').style.display = 'block';
+        }
+
+        function checkPassword() {
+            const enteredPassword = document.getElementById('adminPassword').value;
+            if (enteredPassword === ADMIN_PASSWORD) {
+                document.getElementById('adminModal').style.display = 'none';
+                document.getElementById('uploadForm').style.display = 'block';
+                document.getElementById('homeContent').style.display = 'none';
+            } else {
+                alert('Incorrect password! Try again.');
+            }
+        }
+
+        // File Upload Handling
+        function handleFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (file) {
+                const fileName = file.name;
+                const uploadDate = new Date().toLocaleDateString();
+                
+                // Save to localStorage
+                const existingFiles = JSON.parse(localStorage.getItem('uploadedFiles')) || [];
+                existingFiles.push({name: fileName, date: uploadDate});
+                localStorage.setItem('uploadedFiles', JSON.stringify(existingFiles));
+                
+                // Show confirmation
+                alert('File uploaded successfully!');
+                showHome();
+            }
+        }
+
+        // Display Files
+        function showHome() {
+            document.getElementById('homeContent').style.display = 'block';
+            document.getElementById('uploadForm').style.display = 'none';
+            
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            const files = JSON.parse(localStorage.getItem('uploadedFiles')) || [];
+            
+            files.forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.className = 'file-item';
+                listItem.innerHTML = `
+                    ${file.name} 
+                    <span class="file-date">Uploaded: ${file.date}</span>
+                `;
+                fileList.appendChild(listItem);
+            });
+        }
+
+        // Initialize
+        showHome();
+    </script>
+</body>
+</html>
